@@ -1,9 +1,5 @@
 <template>
-    <Bar
-      id="my-chart-id"
-      :options="chartOptions"
-      :data="chartData"
-    />
+    <Bar :data="chartData" />
   </template>
   
   <script>
@@ -18,11 +14,19 @@
     data() {
       return {
         chartData: {
-          labels: [ 'January', 'February', 'March' ],
-          datasets: [ { data: [40, 20, 12] } ]
-        },
-        chartOptions: {
-          responsive: true
+          labels: [ 'January', 'February', 'March', 'Tys in Nyc'],
+          datasets: [
+            {
+              label: 'Data One',
+              backgroundColor: '#f87979',
+              data: [40, 20, 12, 1]
+            },
+            {
+              label: 'Data Two',
+              backgroundColor: '#f87979',
+              data: [20, 10, 6, .5]
+            }
+          ]
         }
       }
     }

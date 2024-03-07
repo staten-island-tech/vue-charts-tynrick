@@ -1,9 +1,9 @@
 <script setup>
-import TheWelcome from '../components/rickychart.vue'
+import BarChart from "../components/rickychart.vue"
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <BarChart/>
   </main>
 </template>
