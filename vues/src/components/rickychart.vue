@@ -1,34 +1,33 @@
 <template>
-    <Bar :data="chartData" />
-  </template>
-  
-  <script>
-  import { Bar } from 'vue-chartjs'
-  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-  
-  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-  
-  export default {
-    name: 'BarChart',
-    components: { Bar },
-    data() {
-      return {
-        chartData: {
-          labels: [ 'January', 'February', 'March', 'Tys in Nyc'],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [40, 20, 12, 1]
-            },
-            {
-              label: 'Data Two',
-              backgroundColor: '#f87979',
-              data: [20, 10, 6, .5]
-            }
-          ]
-        }
-      }
+  <div class="container">
+    <Bar v-if="loaded" :data="chartData" />
+  </div>
+</template>
+
+<script>
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
+export default {
+  name: 'BarChart',
+  components: { Bar },
+  data: () => ({
+    loaded: false,
+    chartData: null
+  }),
+  async mounted () {
+    this.loaded = false
+
+    try {
+      const { userlist } = await fetch(`https://data.cityofnewyork.us/resource/jb7j-dtam.json`)
+      this.chartdata = userlist
+
+      this.loaded = true
+    } catch (e) {
+      console.error(e)
     }
   }
-  </script>
+}
+</script>
