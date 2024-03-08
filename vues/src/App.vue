@@ -8,13 +8,10 @@ import { RouterLink, RouterView } from 'vue-router'
   <BarChart />
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
-
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/AboutView.vue">About</RouterLink>
+        <RouterLink to="/../views/AboutView.vue">About</RouterLink>
       </nav>
     </div>
   </header>

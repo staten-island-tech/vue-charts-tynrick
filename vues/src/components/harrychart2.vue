@@ -1,6 +1,6 @@
 <template>
     <Bar
-      id="my-chart-id"
+      id="my-chart-id-2"
       :options="chartOptions"
       :data="chartData"
     />
@@ -13,12 +13,12 @@
   ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
   
   export default {
-    name: 'BarChart',
+    name: 'BarChart2',
     components: { Bar },
     data() {
       return {
         chartData: {
-          labels: [ 'January', 'February', 'March' ],
+          labels: [ 'January', 'Apirl', 'May' ],
           datasets: [ { data: [40, 50, 32] } ]
         },
         chartOptions: {
