@@ -1,9 +1,10 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import TyCharter from '../components/TyCharter.vue'
+console.log(userlist)
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <TyCharter />
   </main>
 </template>
