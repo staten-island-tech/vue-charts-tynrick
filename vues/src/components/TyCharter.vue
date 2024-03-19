@@ -15,27 +15,38 @@ export default {
   components: { Bar },
   data: () => ({
     loaded: false,
-    chartData: {
-      labels: [],
-        datasets: []
-    }
+    chartData: null
   }),
   async mounted () {
     this.loaded = false
 
     try {
-      const { userlist } = await fetch('data.cityofnewyork.us/resource/jb7j-dtam.json')
-      this.chartdata = userlist
+      const response = await fetch('https://data.cityofnewyork.us/resource/jb7j-dtam.json')
+      if (response.status !=200) {
+        throw new Error(response.statusText)
+      }
+      const data = await response.json();
+     
+      const labels = [];
+      const datasets = [];
 
-      userlist.forEach(data => {
-        this.chartData.labels.push(data.year)
-      })
-      userlist.forEach(data => {
-        this.chartData.datasets.push(data.deaths)
-      })
-      this.loaded = true
-    } catch (e) {
-      console.error(e)
+      data.forEach(item => {
+        labels.push(item.year);
+        datasets.push({
+          label: item.race_ethnicity,
+          data: [item.deaths],
+          backgroundColor: '#f87979',
+        });
+      });
+
+      this.chartData = {
+        labelss: labels,
+        datasetss: datasets,
+      };
+
+      this.loaded = true;
+    } catch (error) {
+      console.error('oopsies', error)
     }
   }
 }
