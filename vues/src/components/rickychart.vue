@@ -4,11 +4,14 @@
   </div>
 </template>
 
+
 <script>
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 
+
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
 
 export default {
   name: 'BarChart',
@@ -20,13 +23,37 @@ export default {
   async mounted () {
     this.loaded = false
 
-    try {
-      const { userlist } = await fetch(`https://data.cityofnewyork.us/resource/jb7j-dtam.json`)
-      this.chartdata = userlist
 
-      this.loaded = true
-    } catch (e) {
-      console.error(e)
+    try {
+      const response = await fetch('https://data.cityofnewyork.us/resource/jb7j-dtam.json')
+      if (response.status !=200) {
+        throw new Error(response.statusText)
+      }
+      const data = await response.json();
+     
+      const labels = [];
+      const datasets = [];
+
+
+      data.forEach(item => {
+        labels.push(item.year);
+        datasets.push({
+          label: item.race_ethnicity,
+          data: [item.deaths],
+          backgroundColor: '#f87979',
+        });
+      });
+
+
+      this.chartData = {
+        labelss: labels,
+        datasetss: datasets,
+      };
+
+
+      this.loaded = true;
+    } catch (error) {
+      console.error('oopsies', error)
     }
   }
 }
