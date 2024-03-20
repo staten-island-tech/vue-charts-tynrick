@@ -38,8 +38,8 @@ export default {
       data.forEach(item => {
         labels.push(item.year);
         datasets.push({
-          label: item.race_ethnicity,
-          data: [item.deaths],
+          ethnicity: item.race_ethnicity,
+           data: [item.deaths],
           backgroundColor: '#f87979',
         });
       });
