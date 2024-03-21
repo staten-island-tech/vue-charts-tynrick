@@ -31,22 +31,28 @@ export default {
       }
       const data = await response.json();
       const pee = [];
+      const poo = [];
       const labels = [];
       const datasets = [];
 
 
       data.forEach(item => {
-        labels.push(item.year);
-        pee.push(item.race_ethnicity)
-        if (pee.includes(item.race_ethnicity)){
-          console.log(pee)
+        if (poo.includes(item.year)){
+          console.log(datasets)
         } else{
-          data.push({
+        labels.push(item.year)
+        }
+        poo.push(item.year)
+        if (pee.includes(item.race_ethnicity)){
+          console.log(datasets)
+        } else{
+          datasets.push({
           label: item.race_ethnicity,
           data: item.deaths,
           backgroundColor: '#f87979',
         });
         }
+        pee.push(item.race_ethnicity)
 
       });
 
