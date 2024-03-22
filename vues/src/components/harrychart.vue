@@ -31,22 +31,28 @@ export default {
       }
       const data = await response.json();
       const race = [];
+      const year = [];
       const labels = [];
       const datasets = [];
 
 
       data.forEach(item => {
-        labels.push(item.year);
-        race.push(item.race_ethnicity)
-        if (race.includes(item.race_ethnicity)){
-          console.log(race)
+        if (year.includes(item.year)){
+          console.log(datasets)
         } else{
-          data.push({
+        labels.push(item.year)
+        }
+        year.push(item.year)
+        if (race.includes(item.race_ethnicity)){
+          console.log(datasets)
+        } else{
+          datasets.push({
           label: item.race_ethnicity,
           data: item.deaths,
           backgroundColor: '#f87979',
         });
         }
+        race.push(item.race_ethnicity)
 
       });
 
