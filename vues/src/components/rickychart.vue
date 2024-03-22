@@ -45,11 +45,12 @@ export default {
         poo.push(item.year)
         if (pee.includes(item.race_ethnicity)){
           console.log(datasets)
-        } else{
+        } 
+        else if (item.race_ethnicity = "Asian and Pacific Islander"){
           datasets.push({
           label: item.race_ethnicity,
           data: item.deaths,
-          backgroundColor: '#f87979',
+          backgroundColor: '#ffd700',
         });
         }
         pee.push(item.race_ethnicity)
