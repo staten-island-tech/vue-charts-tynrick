@@ -32,9 +32,14 @@ export default {
       const data = await response.json();
       const pee = [];
       const poo = [];
+      const asian_peepoo = [];
+      const white_peepoo = [];
+      const hispanic_peepoo = [];
+      const black_peepoo = [];
+      const other_peepoo = [];
+      const unknown_peepoo = [];
       const labels = [];
       const datasets = [];
-
 
       data.forEach(item => {
         if (poo.includes(item.year)){
@@ -43,18 +48,19 @@ export default {
         labels.push(item.year)
         }
         poo.push(item.year)
-        if (pee.includes(item.race_ethnicity)){
-          console.log(datasets)
-        } 
-        else if (item.race_ethnicity = "Asian and Pacific Islander"){
-          datasets.push({
-          label: item.race_ethnicity,
-          data: item.deaths,
-          backgroundColor: '#ffd700',
-        });
-        }
-        pee.push(item.race_ethnicity)
-
+        if (item.race_ethnicity = "Asian and Pacific Islander"){
+          asian_peepoo.push(item.deaths);}
+        if (item.race_ethnicity = "White Non-Hispanic"){
+          white_peepoo.push(item.deaths);}
+        if (item.race_ethnicity = "Hispanic"){
+          hispanic_peepoo.push(item.deaths);}
+        if (item.race_ethnicity = "Black Non-Hispanic "){
+          black_peepoo.push(item.deaths);}
+        if (item.race_ethnicity = "Other Race/Ethnicity"){
+          other_peepoo.push(item.deaths);}
+        if (item.race_ethnicity = "Not Stated/Unknown"){
+          unknown_peepoo.push(item.deaths);}
+          console.log(asian_peepoo)
       });
 
 
