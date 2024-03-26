@@ -41,6 +41,13 @@
           labels.push(item.year)
           }
           poo.push(item.year)
+          for (i=2011; i <= item.year; i++)
+          if (item.year == 2011) {
+            
+          }
+          if (item.year !== 2011) {
+            item.year++
+          }
           if (pee.includes(item.race_ethnicity)){
             console.log(datasets)
           } else{
