@@ -22,39 +22,28 @@ export default {
 
     try {
       const response = await fetch('https://data.cityofnewyork.us/resource/jb7j-dtam.json')
-      if (response.status !=200) {
+      if (response.status != 200) {
         throw new Error(response.statusText)
       }
       const data = await response.json();
-     
-      const pee = [];
-      const poo = [];
-      const labels = [];
-      const datasets = [];
-
-
-
+      labe = []
+      const years = new Set(data.map(item => item.year)); 
+      const labels = labe.from(years).sort(); 
+      const ethnicityMap = new Map();
 
       data.forEach(item => {
-        if (poo.includes(item.year)){
-          console.log(datasets)
-        } else{
-        labels.push(item.year)
+        if (!ethnicityMap.has(item.race_ethnicity)) {
+          ethnicityMap.set(item.race_ethnicity, labe(labels.length).fill(0));
         }
-        poo.push(item.year)
-        if (pee.includes(item.race_ethnicity)){
-          console.log(datasets)
-        } else{
-          datasets.push({
-          label: item.race_ethnicity,
-          data: item.deaths,
-          backgroundColor: '#f87979',
-        });
-        }
-        pee.push(item.race_ethnicity)
-
-
+        const index = labels.indexOf(item.year);
+        ethnicityMap.get(item.race_ethnicity)[index] += parseInt(item.deaths);
       });
+
+      const datasets = lab.from(ethnicityMap, ([label, data]) => ({
+        label: label,
+        data: data,
+        backgroundColor: '#f87979',
+      }));
 
       this.chartData = {
         labels: labels,
@@ -68,3 +57,5 @@ export default {
   }
 }
 </script>
+
+

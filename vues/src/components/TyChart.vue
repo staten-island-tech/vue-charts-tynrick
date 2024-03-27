@@ -5,14 +5,13 @@
   </template>
   
   <script>
-  import { Bar } from 'vue-chartjs'
-  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-  
-  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-  
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import { Pie } from 'vue-chartjs'
+
+ChartJS.register(ArcElement, Tooltip, Legend)
   export default {
-    name: 'BarChart',
-    components: { Bar },
+    name: 'PieChart',
+    components: { Pie },
     data: () => ({
       loaded: false,
       chartData: null
@@ -41,16 +40,9 @@
           labels.push(item.year)
           }
           poo.push(item.year)
-          for (i=2011; i <= item.year; i++)
-          if (item.year == 2011) {
-            
-          }
-          if (item.year !== 2011) {
-            item.year++
-          }
           if (pee.includes(item.race_ethnicity)){
             console.log(datasets)
-          } else{
+          } else{w
             datasets.push({
             label: item.race_ethnicity,
             data: item.deaths,

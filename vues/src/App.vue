@@ -1,12 +1,13 @@
 <template>
-    <BarChart />
+    <PieChart />
   </template>
   
   <script>
-  import BarChart from './components/TyCharter.vue'
+  import PieChart from './components/TyChart.vue'
   
   export default {
     name: 'App',
-    components: { BarChart }
+    components: { PieChart }
   }
   </script>
+
