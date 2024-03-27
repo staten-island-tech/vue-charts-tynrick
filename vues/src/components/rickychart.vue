@@ -22,8 +22,6 @@ export default {
   }),
   async mounted () {
     this.loaded = false
-
-
     try {
       const response = await fetch('https://data.cityofnewyork.us/resource/jb7j-dtam.json')
       if (response.status !=200) {
@@ -40,37 +38,28 @@ export default {
       const unknown_peepoo = [];
       const labels = [];
       const datasets = [];
-
       data.forEach(item => {
-        if (poo.includes(item.year)){
-          console.log(datasets)
-        } else{
-        labels.push(item.year)
-        }
-        poo.push(item.year)
-        if (item.race_ethnicity = "Asian and Pacific Islander"){
+        if (!poo.includes(item.year)){
+          poo.push(item.year)
+        if (item.race_ethnicity = "Asian and Pacific Islander" | item.deaths != "."){
           asian_peepoo.push(item.deaths);}
-        if (item.race_ethnicity = "White Non-Hispanic"){
+          if (!labels.includes(item.race_ethnicity)){
+            labels.push
+          }
+        if (item.race_ethnicity = "White Non-Hispanic" | item.deaths != "."){
           white_peepoo.push(item.deaths);}
-        if (item.race_ethnicity = "Hispanic"){
+        if (item.race_ethnicity = "Hispanic" | item.deaths != "."){
           hispanic_peepoo.push(item.deaths);}
-        if (item.race_ethnicity = "Black Non-Hispanic "){
+        if (item.race_ethnicity = "Black Non-Hispanic " | item.deaths != "."){
           black_peepoo.push(item.deaths);}
-        if (item.race_ethnicity = "Other Race/Ethnicity"){
+        if (item.race_ethnicity = "Other Race/Ethnicity" | item.deaths != "."){
           other_peepoo.push(item.deaths);}
-        if (item.race_ethnicity = "Not Stated/Unknown"){
+        if (item.race_ethnicity = "Not Stated/Unknown" | item.deaths != "."){
           unknown_peepoo.push(item.deaths);}
           console.log(asian_peepoo)
-      });
-
-
-      this.chartData = {
-        labels: labels,
-        datasets: datasets,
-      };
-
-
-      this.loaded = true;
+        } else{
+        console.log("oops");
+        }});
     } catch (error) {
       console.error('oopsies', error)
     }
