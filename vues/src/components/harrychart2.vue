@@ -1,22 +1,21 @@
+
 <template>
-    <Bar v-if = "loaded"
-      id="my-chart-id-2"
-      :options="chartOptions"
-      :data="chartData"
-    />
-  </template>
-  
-  <script>
+  <div class="container">
+    <Doughnut v-if="loaded" :data="chartData" />
+  </div>
+</template>
+
+
+<script>
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
   
 ChartJS.register(ArcElement, Tooltip, Legend)
 
+
 export default {
-  name: 'App',
-  components: {
-    Doughnut
-  },
+  name: 'Doughnut',
+  components: { Doughnut },
   data: () => ({
     loaded: false,
     chartData: null
