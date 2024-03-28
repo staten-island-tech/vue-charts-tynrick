@@ -45,31 +45,26 @@ export default {
           white_peepoo.push(item.deaths);
           datasets.push({
           label: item.race_ethnicity,
-          data: item.deaths,
           backgroundColor: '#ffd700',})}
         if (item.race_ethnicity = "Hispanic" | item.deaths != "."){
           peepoo.push(item.deaths);
           datasets.push({
           label: item.race_ethnicity,
-          data: item.deaths,
           backgroundColor: '#ffd700',})}
         if (item.race_ethnicity = "Black Non-Hispanic " | item.deaths != "."){
           peepoo.push(item.deaths);
           datasets.push({
           label: item.race_ethnicity,
-          data: item.deaths,
           backgroundColor: '#ffd700',})}
         if (item.race_ethnicity = "Other Race/Ethnicity" | item.deaths != "."){
           peepoo.push(item.deaths);
           datasets.push({
           label: item.race_ethnicity,
-          data: item.deaths,
           backgroundColor: '#ffd700',})}
         if (item.race_ethnicity = "Not Stated/Unknown" | item.deaths != "."){
           peepoo.push(item.deaths);
           datasets.push({
           label: item.race_ethnicity,
-          data: item.deaths,
           backgroundColor: '#ffd700',})}
           console.log(asian_peepoo)
         } else{
