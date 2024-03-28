@@ -26,23 +26,22 @@ export default {
         throw new Error(response.statusText)
       }
       const data = await response.json();
-      labe = []
       const years = new Set(data.map(item => item.year)); 
-      const labels = labe.from(years).sort(); 
+      const labels = Array.from(years).sort(); 
       const ethnicityMap = new Map();
 
       data.forEach(item => {
         if (!ethnicityMap.has(item.race_ethnicity)) {
-          ethnicityMap.set(item.race_ethnicity, labe(labels.length).fill(0));
+          ethnicityMap.set(item.race_ethnicity, Array(labels.length).fill(0));
         }
         const index = labels.indexOf(item.year);
         ethnicityMap.get(item.race_ethnicity)[index] += parseInt(item.deaths);
       });
 
-      const datasets = lab.from(ethnicityMap, ([label, data]) => ({
+      const datasets = Array.from(ethnicityMap, ([label, data]) => ({
         label: label,
         data: data,
-        backgroundColor: '#f87979',
+        backgroundColor: ['#f87979', '#FFB347', '#fdfd96', '#77dd77', '#aec6cf', '#B39eb5']
       }));
 
       this.chartData = {

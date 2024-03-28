@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-      <Bar v-if="loaded" :data="chartData" />
+      <Pie v-if="loaded" :data="chartData" />
     </div>
   </template>
   
@@ -42,11 +42,11 @@ ChartJS.register(ArcElement, Tooltip, Legend)
           poo.push(item.year)
           if (pee.includes(item.race_ethnicity)){
             console.log(datasets)
-          } else{w
+          } else{
             datasets.push({
             label: item.race_ethnicity,
             data: item.deaths,
-            backgroundColor: '#f87979',
+            backgroundColor: ['#f87979', '#FFB347', '#fdfd96', '#77dd77', '#aec6cf', '#B39eb5']
           });
           }
           pee.push(item.race_ethnicity)
