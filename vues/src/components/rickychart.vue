@@ -30,12 +30,7 @@ export default {
       const data = await response.json();
       const pee = [];
       const poo = [];
-      const asian_peepoo = [];
-      const white_peepoo = [];
-      const hispanic_peepoo = [];
-      const black_peepoo = [];
-      const other_peepoo = [];
-      const unknown_peepoo = [];
+      const peepoo = [];
       const labels = [];
       const datasets = [];
       data.forEach(item => {
@@ -47,19 +42,43 @@ export default {
             labels.push
           }
         if (item.race_ethnicity = "White Non-Hispanic" | item.deaths != "."){
-          white_peepoo.push(item.deaths);}
+          white_peepoo.push(item.deaths);
+          datasets.push({
+          label: item.race_ethnicity,
+          data: item.deaths,
+          backgroundColor: '#ffd700',})}
         if (item.race_ethnicity = "Hispanic" | item.deaths != "."){
-          hispanic_peepoo.push(item.deaths);}
+          peepoo.push(item.deaths);
+          datasets.push({
+          label: item.race_ethnicity,
+          data: item.deaths,
+          backgroundColor: '#ffd700',})}
         if (item.race_ethnicity = "Black Non-Hispanic " | item.deaths != "."){
-          black_peepoo.push(item.deaths);}
+          peepoo.push(item.deaths);
+          datasets.push({
+          label: item.race_ethnicity,
+          data: item.deaths,
+          backgroundColor: '#ffd700',})}
         if (item.race_ethnicity = "Other Race/Ethnicity" | item.deaths != "."){
-          other_peepoo.push(item.deaths);}
+          peepoo.push(item.deaths);
+          datasets.push({
+          label: item.race_ethnicity,
+          data: item.deaths,
+          backgroundColor: '#ffd700',})}
         if (item.race_ethnicity = "Not Stated/Unknown" | item.deaths != "."){
-          unknown_peepoo.push(item.deaths);}
+          peepoo.push(item.deaths);
+          datasets.push({
+          label: item.race_ethnicity,
+          data: item.deaths,
+          backgroundColor: '#ffd700',})}
           console.log(asian_peepoo)
         } else{
         console.log("oops");
         }});
+        this.chartData = {
+        labels: labels,
+        datasets: datasets,
+      };
     } catch (error) {
       console.error('oopsies', error)
     }
