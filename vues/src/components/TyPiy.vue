@@ -1,0 +1,59 @@
+<template>
+    <div class="container">
+      <Pie v-if="loaded" :data="chartData" />
+    </div>
+  </template>
+  
+  <script>
+  import { Pie } from 'vue-chartjs'
+  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+  
+  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+  
+  export default {
+    name: 'PiyChart',
+    components: { Pie },
+    data: () => ({
+      loaded: false,
+      chartData: null
+    }),
+    async mounted () {
+      this.loaded = false
+  
+      try {
+        const response = await fetch('https://data.cityofnewyork.us/resource/jb7j-dtam.json')
+        if (response.status != 200) {
+          throw new Error(response.statusText)
+        }
+        const data = await response.json();
+        const years = new Set(data.map(item => item.year)); 
+        const labels = Array.from(years).sort(); 
+        const ethnicity = new Map();
+  
+        data.forEach(item => {
+          if (!ethnicity.has(item.race_ethnicity)) {
+            ethnicity.set(item.race_ethnicity, Array(labels.length).fill(0));
+          }
+          const index = labels.indexOf(item.year);
+          ethnicity.get(item.race_ethnicity)[index] += parseInt(item.deaths);
+        });
+  
+        const datasets = Array.from(ethnicity, ([label, data]) => ({
+          label: label,
+          data: data,
+          backgroundColor: ['#f87979', '#FFB347', '#fdfd96', '#77dd77', '#aec6cf', '##8686AF', '#B39eb5', '#ffd1dc', ]
+        }));
+  
+        this.chartData = {
+          labels: labels,
+          datasets: datasets,
+        };
+  
+        this.loaded = true;
+      } catch (error) {
+        console.error('oopsies', error)
+      }
+    }
+  }
+  </script>
+  

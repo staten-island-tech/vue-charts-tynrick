@@ -41,7 +41,7 @@ export default {
       const datasets = Array.from(ethnicityMap, ([label, data]) => ({
         label: label,
         data: data,
-        backgroundColor: ['#f87979', '#FFB347', '#fdfd96', '#77dd77', '#aec6cf', '#B39eb5']
+        backgroundColor: ['#f87979', '#FFB347', '#fdfd96', '#77dd77', '#aec6cf', '##8686AF', '#B39eb5', '#ffd1dc', ]
       }));
 
       this.chartData = {

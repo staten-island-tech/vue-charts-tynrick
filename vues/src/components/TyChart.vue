@@ -46,7 +46,7 @@ ChartJS.register(ArcElement, Tooltip, Legend)
             datasets.push({
             label: item.race_ethnicity,
             data: item.deaths,
-            backgroundColor: ['#f87979', '#FFB347', '#fdfd96', '#77dd77', '#aec6cf', '#B39eb5']
+            backgroundColor: ['#f87979', '#FFB347', '#fdfd96', '#77dd77', '#aec6cf', '##8686AF', '#B39eb5', '#ffd1dc', ]
           });
           }
           pee.push(item.race_ethnicity)
