@@ -1,71 +1,57 @@
-
 <template>
   <div class="container">
-    <Doughnut v-if="loaded" :data="chartData" />
+    <Pie v-if="loaded" :data="chartData" />
   </div>
 </template>
-
-
 <script>
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import { Doughnut } from 'vue-chartjs'
-  
-ChartJS.register(ArcElement, Tooltip, Legend)
-
-
+import { Pie } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend } from 'chart.js'
+ChartJS.register(Title, Tooltip, Legend)
 export default {
-  name: 'Doughnut',
-  components: { Doughnut },
-  data: () => ({
-    loaded: false,
-    chartData: null
-  }),
-  async mounted () {
+  name: 'PieChart',
+  components: { Pie },
+  data() {
+    return {
+      loaded: false,
+      chartData: null
+    }
+  },
+  async mounted() {
     this.loaded = false
-
 
     try {
       const response = await fetch('https://data.cityofnewyork.us/resource/jb7j-dtam.json')
-      if (response.status !=200) {
+      if (response.status !== 200) {
         throw new Error(response.statusText)
       }
-      const data = await response.json();
-      const race = [];
-      const year = [];
-      const labels = [];
-      const datasets = [];
-
-
+      const data = await response.json()
+      const raceMap = new Map()
       data.forEach(item => {
-        if (year.includes(item.year)){
-          console.log(datasets)
-        } else{
-        labels.push(item.year)
+        const key = item.race_ethnicity
+        const deaths = parseInt(item.deaths)
+        if (raceMap.has(key)) {
+          raceMap.set(key, raceMap.get(key) + deaths)
+        } else {
+          raceMap.set(key, deaths)
         }
-        year.push(item.year)
-        if (race.includes(item.race_ethnicity)){
-          console.log(datasets)
-        } else{
-          datasets.push({
-          label: item.race_ethnicity,
-          data: item.deaths,
-          backgroundColor: '#f87979',
-        });
-        }
-        race.push(item.race_ethnicity)
-
-      });
-
-
+      })
       this.chartData = {
-        labels: labels,
-        datasets: datasets,
-      };
-
-
-      this.loaded = true;
+        labels: Array.from(raceMap.keys()),
+        datasets: [{
+          data: Array.from(raceMap.values()),
+          backgroundColor: [
+            '#ff6384',
+            '#36a2eb',
+            '#ffce56',
+            '#ff8a00',
+            '#9966ff',
+            '#00cc99'
+          ]
+        }]
+      }
+      this.loaded = true
     } catch (error) {
-      console.error('oopsies', error)
+      console.error('Error fetching data:', error)
     }
   }
 }
