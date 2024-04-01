@@ -1,9 +1,9 @@
 <script setup>
-import Chart1 from '../components/harrychart.vue'
+import TheWelcome from '../components/TheWelcome.vue'
 </script>
 
 <template>
   <main>
-    <Chart1 />
+    <TheWelcome />
   </main>
 </template>
