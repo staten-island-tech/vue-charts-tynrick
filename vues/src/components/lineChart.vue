@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js/auto';
+import { Chart, registerables } from 'chart.js';
 
 export default {
   data() {
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     registerChartComponents() {
-      ChartJS.register(ArcElement, Tooltip, Legend);
+      Chart.register(...registerables);
     },
     async fetchData() {
       try {
@@ -72,7 +72,7 @@ export default {
     },
     renderChart() {
       const ctx = this.$refs.myChart.getContext('2d');
-      this.chart = new ChartJS(ctx, {
+      this.chart = new Chart(ctx, {
         type: 'line',
         data: {
           labels: this.labels,
