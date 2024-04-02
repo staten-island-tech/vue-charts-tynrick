@@ -1,9 +1,9 @@
 <script setup>
-import lineChart from '../components/harrychart2.vue'
+import Chart2 from '../components/harrychart2.vue'
 </script>
 
 <template>
   <main>
-    <lineChart />
+    <Chart2 />
   </main>
 </template>
