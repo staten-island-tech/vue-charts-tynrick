@@ -1,9 +1,9 @@
 <script setup>
-import pieChart from '../components/rickychart.vue'
+import PieChart from '../components/rickychart.vue'
 </script>
 
 <template>
   <main>
-    <pieChart />
+    <PieChart />
   </main>
 </template>
