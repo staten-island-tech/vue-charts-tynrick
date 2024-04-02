@@ -1,72 +1,97 @@
 <template>
-  <div class="container">
-    <Bar v-if="loaded" :data="chartData" />
+  <div>
+    <canvas ref="myChart"></canvas>
   </div>
 </template>
 
-
 <script>
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-
-
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
+import Chart from 'chart.js/auto';
 
 export default {
-  name: 'BarChart',
-  components: { Bar },
-  data: () => ({
-    loaded: false,
-    chartData: null
-  }),
-  async mounted () {
-    this.loaded = false
-
-
-    try {
-      const response = await fetch('https://data.cityofnewyork.us/resource/jb7j-dtam.json')
-      if (response.status !=200) {
-        throw new Error(response.statusText)
+  data() {
+    return {
+      chartData: [],
+      labels: [],
+      datasets: [],
+      apiUrl: 'https://data.cityofnewyork.us/resource/jb7j-dtam.json',
+    };
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const response = await fetch(this.apiUrl);
+        const data = await response.json();
+        this.processData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-      const data = await response.json();
-      const race = [];
-      const year = [];
-      const labels = [];
-      const datasets = [];
-
-
-      data.forEach(item => {
-        if (year.includes(item.year)){
-          console.log(datasets)
-        } else{
-        labels.push(item.year)
+    },
+    processData(data) {
+      // Process data to get labels and datasets for the chart
+      const causes = {};
+      data.forEach(entry => {
+        const year = entry.year;
+        const leadingCause = entry.leading_cause;
+        const deaths = parseInt(entry.deaths);
+        if (!causes[leadingCause]) {
+          causes[leadingCause] = {};
         }
-        year.push(item.year)
-        if (race.includes(item.race_ethnicity)){
-          console.log(datasets)
-        } else{
-          datasets.push({
-          label: item.race_ethnicity,
-          data: item.deaths,
-          backgroundColor: '#f87979',
-        });
+        if (!causes[leadingCause][year]) {
+          causes[leadingCause][year] = deaths;
+        } else {
+          causes[leadingCause][year] += deaths;
         }
-        race.push(item.race_ethnicity)
-
       });
 
+      this.labels = Object.keys(causes[Object.keys(causes)[0]]).sort();
+      this.datasets = Object.keys(causes).map(cause => {
+        const data = [];
+        Object.keys(causes[cause]).forEach(year => {
+          data.push(causes[cause][year]);
+        });
+        return {
+          label: cause,
+          data: data,
+          fill: false,
+          borderColor: this.getRandomColor(),
+          tension: 0.4,
+        };
+      });
 
-      this.chartData = {
-        labels: labels,
-        datasets: datasets,
-      };
-
-
-      this.loaded = true;
-    } catch (error) {
-      console.error('oopsies', error)
-    }
-  }
-}
+      this.renderChart();
+    },
+    renderChart() {
+      const ctx = this.$refs.myChart.getContext('2d');
+      this.chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: this.labels,
+          datasets: this.datasets,
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    },
+    getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    },
+  },
+};
 </script>
+
+<style scoped>
+/* Add styles if necessary */
+</style>
