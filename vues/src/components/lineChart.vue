@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <canvas ref="myChart"></canvas>
+  <div class="container">
+    <div class="center">
+      <h1>Line Chart of Deaths by Leading Causes</h1>
+      <h2>Year-wise Distribution</h2>
+      <canvas ref="myChart"></canvas>
+    </div>
   </div>
 </template>
 
 <script>
-import Chart from 'chart.js/auto';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js/auto';
 
 export default {
   data() {
@@ -17,9 +21,13 @@ export default {
     };
   },
   mounted() {
+    this.registerChartComponents();
     this.fetchData();
   },
   methods: {
+    registerChartComponents() {
+      ChartJS.register(ArcElement, Tooltip, Legend);
+    },
     async fetchData() {
       try {
         const response = await fetch(this.apiUrl);
@@ -30,7 +38,6 @@ export default {
       }
     },
     processData(data) {
-
       const causes = {};
       data.forEach(entry => {
         const year = entry.year;
@@ -65,7 +72,7 @@ export default {
     },
     renderChart() {
       const ctx = this.$refs.myChart.getContext('2d');
-      this.chart = new Chart(ctx, {
+      this.chart = new ChartJS(ctx, {
         type: 'line',
         data: {
           labels: this.labels,
@@ -93,5 +100,14 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  height: 100vh;
+}
 
+.center {
+  text-align: center;
+}
 </style>
