@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <canvas ref="myChart"></canvas>
+  <div class="container">
+    <div class="center">
+      <h1>Line Chart of Deaths by Leading Causes</h1>
+      <h2>Year-wise Distribution</h2>
+      <canvas ref="myChart"></canvas>
+    </div>
   </div>
 </template>
 
 <script>
-import Chart from 'chart.js/auto';
+import { Chart, registerables } from 'chart.js';
 
 export default {
   data() {
@@ -17,9 +21,13 @@ export default {
     };
   },
   mounted() {
+    this.registerChartComponents();
     this.fetchData();
   },
   methods: {
+    registerChartComponents() {
+      Chart.register(...registerables);
+    },
     async fetchData() {
       try {
         const response = await fetch(this.apiUrl);
@@ -30,7 +38,6 @@ export default {
       }
     },
     processData(data) {
-
       const causes = {};
       data.forEach(entry => {
         const year = entry.year;
@@ -93,5 +100,14 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  height: 100vh;
+}
 
+.center {
+  text-align: center;
+}
 </style>
