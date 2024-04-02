@@ -52,15 +52,7 @@ export default {
         }
       });
 
-      const pee = [
-        '#FF0000', 
-        '#FF7F00', 
-        '#FFFF00', 
-        '#00FF00', 
-        '#0000FF', 
-        '#4B0082', 
-        '#9400D3',
-      ];
+      const pee = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3'];
 
       const chartDatasets = [];
 
@@ -92,13 +84,6 @@ Object.keys(datasets).forEach((race, raceIndex) => {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
 .center {
   text-align: center;
 }
