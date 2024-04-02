@@ -1,72 +1,105 @@
 <template>
   <div class="container">
-    <Bar v-if="loaded" :data="chartData" />
+    <div class="center">
+      <h1>Pie Chart Of Deaths Of Different Races and Genders</h1>
+      <h2>2014-2007</h2>
+      <Pie v-if="loaded" :data="chartData" />
+    </div>
   </div>
 </template>
 
-
 <script>
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-
-
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import { Pie } from 'vue-chartjs'
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 export default {
-  name: 'BarChart',
-  components: { Bar },
-  data: () => ({
-    loaded: false,
-    chartData: null
-  }),
-  async mounted () {
+  name: 'PieChart',
+  components: { Pie },
+  data() {
+    return {
+      loaded: false,
+      chartData: null
+    }
+  },
+  async mounted() {
     this.loaded = false
-
-
     try {
       const response = await fetch('https://data.cityofnewyork.us/resource/jb7j-dtam.json')
-      if (response.status !=200) {
-        throw new Error(response.statusText)
+      if (!response.ok) {
+        throw new Error('Failed to fetch data')
       }
       const data = await response.json();
-      const pee = [];
-      const poo = [];
       const labels = [];
-      const datasets = [];
-
+      const datasets = {};
 
       data.forEach(item => {
-        if (poo.includes(item.year)){
-          console.log(datasets)
-        } else{
-        labels.push(item.year)
+        if (!labels.includes(item.year)) {
+          labels.push(item.year);
         }
-        poo.push(item.year)
-        if (pee.includes(item.race_ethnicity)){
-          console.log(datasets)
-        } else{
-          datasets.push({
-          label: item.race_ethnicity,
-          data: item.deaths,
-          backgroundColor: '#f87979',
-        });
+        if (!datasets[item.race_ethnicity]) {
+          datasets[item.race_ethnicity] = {};
         }
-        pee.push(item.race_ethnicity)
-
+        if (!datasets[item.race_ethnicity][item.sex]) {
+          datasets[item.race_ethnicity][item.sex] = {};
+        }
+        if (!datasets[item.race_ethnicity][item.sex][item.year]) {
+          datasets[item.race_ethnicity][item.sex][item.year] = [];
+        }
+        const deaths = parseFloat(item.deaths);
+        if (!isNaN(deaths)) {
+          datasets[item.race_ethnicity][item.sex][item.year].push(deaths);
+        }
       });
 
+      const pee = [
+        '#FF0000', 
+        '#FF7F00', 
+        '#FFFF00', 
+        '#00FF00', 
+        '#0000FF', 
+        '#4B0082', 
+        '#9400D3',
+      ];
+
+      const chartDatasets = [];
+
+Object.keys(datasets).forEach((race, raceIndex) => {
+  Object.keys(datasets[race]).forEach((gender, genderIndex) => {
+    const label = `${race} - ${gender}`;
+    const backgroundColor = pee[(raceIndex + genderIndex) % pee.length];
+    const data = labels.map(year => {
+      if (datasets[race][gender][year]) {
+        return datasets[race][gender][year].reduce((acc, curr) => acc + curr, 0);
+      } else {
+        return null;
+      }
+    });
+    chartDatasets.push({ label, backgroundColor, data });
+  });
+});
 
       this.chartData = {
         labels: labels,
-        datasets: datasets,
+        datasets: chartDatasets
       };
-
-
       this.loaded = true;
     } catch (error) {
-      console.error('oopsies', error)
+      console.error('Oopsies', error)
     }
   }
 }
 </script>
+
+<style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.center {
+  text-align: center;
+}
+</style>
