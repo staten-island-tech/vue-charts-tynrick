@@ -1,9 +1,9 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import pieChart from '../components/rickychart.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <pieChart />
   </main>
 </template>
