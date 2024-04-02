@@ -11,9 +11,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <HelloWorld msg="You did it!" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-
-        <RouterLink to="/line">Line Chart</RouterLink>
+        <RouterLink to="/">Line Chart</RouterLink>
         <RouterLink to="/pie">Pie Chart</RouterLink>
         <RouterLink to="/bar">Bar Chart</RouterLink>
       </nav>
