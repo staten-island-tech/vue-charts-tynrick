@@ -1,9 +1,9 @@
 <script setup>
-import PieChart from '../components/PieChart.vue'
+
 </script>
 
 <template>
   <main>
-    <PieChart />
+    <h1>Charts WOOOOOOOOOOOOOO!!!!!!!</h1>
   </main>
 </template>
